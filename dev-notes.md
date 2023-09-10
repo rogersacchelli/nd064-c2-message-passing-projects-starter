@@ -37,8 +37,13 @@ The completed project must include:
 
 ## Dev Steps
 
-09-09-2023: 
-   * Added Actions file for API Container.
+*09-09-2023:*
+   * Added Actions file for API Container. Done.
+
+*10-09-2023:*
+* Create pod for kafka broker topic "requests"
+* Mofidy API People to receive data and forward it to kafka topic "requests"
+* Create pod to subscribe and post using gRPC to pod location_api
 
 ### Architecture
 
