@@ -41,6 +41,46 @@ The completed project must include:
 
 ### Architecture
 
-1. Location
-2. Person
-3. 
+User requests are received by frontend react api and forwarded to backend using python flask for the following address:
+
+Command below invokes the persons api:
+```
+http://localhost:30001/api/persons/9/connection?start_date=2020-01-01&end_date=2020-12-30&distance=5
+```
+
+```python
+class ConnectionDataResource(Resource):
+    @responds(schema=ConnectionSchema, many=True)
+    def get(self, person_id) -> ConnectionSchema:
+        start_date: datetime = datetime.strptime(
+            request.args["start_date"], DATE_FORMAT
+        )
+        end_date: datetime = datetime.strptime(request.args["end_date"], DATE_FORMAT)
+        distance: Optional[int] = request.args.get("distance", 5)
+
+        results = ConnectionService.find_contacts(
+            person_id=person_id,
+            start_date=start_date,
+            end_date=end_date,
+            meters=distance,
+        )
+        return results
+```
+
+To consume Kafka messages using gRPC in Python, you'll need to follow these steps:
+
+Set up a Kafka consumer: Start by setting up a Kafka consumer in Python using a library like confluent-kafka-python or kafka-python. This will allow you to connect to your Kafka cluster and consume messages from a specific topic.
+
+Define a gRPC service: Next, define a gRPC service in a .proto file. This file will specify the message types and service methods for your gRPC service. You can define a method that will be responsible for receiving Kafka messages.
+
+Generate gRPC code: Use the protoc compiler to generate the gRPC code in Python. This will generate the necessary client and server code based on your .proto file.
+
+Implement the gRPC server: Implement the gRPC server in Python using the generated code. This server will handle incoming gRPC requests and process them accordingly. In this case, it will consume Kafka messages.
+
+Consume Kafka messages in gRPC server: Inside the gRPC server implementation, use the Kafka consumer you set up earlier to consume messages from the Kafka topic. You can then process these messages as needed.
+
+Start the gRPC server: Finally, start the gRPC server and listen for incoming requests. Once the server is running, it will be able to consume Kafka messages using gRPC.
+
+Remember to import the necessary libraries, handle error cases, and ensure that your Kafka and gRPC configurations are properly set up.
+
+I hope this helps! Let me know if you have any further questions.
