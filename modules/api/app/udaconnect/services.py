@@ -93,6 +93,15 @@ class LocationService:
         # Rely on database to return text form of point to reduce overhead of conversion in app code
         location.wkt_shape = coord_text
         return location
+    
+    @staticmethod
+    def retrieve_all():
+        location, coord_text = (
+            db.session.query(Location, Location.coordinate.ST_AsText())
+        )
+        # Rely on database to return text form of point to reduce overhead of conversion in app code
+        location.wkt_shape = coord_text
+        return location
 
     @staticmethod
     def create(location: Dict) -> Location:
