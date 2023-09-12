@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: D:\GIT\nd064-c2-message-passing-projects-starter\kompose.exe convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: kafka-svc
+  name: kafka-svc
+spec:
+  ports:
+    - name: "9092"
+      port: 9092
+      targetPort: 9092
+  selector:
+    io.kompose.service: kafka-svc
+status:
+  loadBalancer: {}
