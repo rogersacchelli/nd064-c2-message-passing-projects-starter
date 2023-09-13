@@ -28,8 +28,8 @@ spec:
         - env:
             - name: KAFKA_ADVERTISED_HOST_NAME
               value: localhost
-            - name: KAFKA_CREATE_TOPICS
-              value: requests:1:1
+            - name: KAFKA_AUTO_CREATE_TOPICS_ENABLE
+              value: "true"
             - name: KAFKA_ZOOKEEPER_CONNECT
               value: zookeeper:2181
           image: wurstmeister/kafka
