@@ -11,10 +11,17 @@ from flask import request
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
 from typing import Optional, List
+from kafka import KafkaProducer
 
 DATE_FORMAT = "%Y-%m-%d"
 
 api = Namespace("UdaConnect", description="Connections via geolocation.")  # noqa
+
+# Kafka Configuration
+TOPIC_NAME = 'persons'
+KAFKA_SERVER = 'kafka-svc:9092'
+
+producer = KafkaProducer(bootstrap_servers=KAFKA_SERVER)
 
 
 # TODO: This needs better exception handling
@@ -34,6 +41,8 @@ class LocationResource(Resource):
     @responds(schema=LocationSchema)
     def get(self, location_id) -> Location:
         location: Location = LocationService.retrieve(location_id)
+        producer.send(TOPIC_NAME, b'Test Message!!!')
+        producer.flush()
         return location
 
 
@@ -49,6 +58,7 @@ class PersonsResource(Resource):
     @responds(schema=PersonSchema, many=True)
     def get(self) -> List[Person]:
         persons: List[Person] = PersonService.retrieve_all()
+        
         return persons
 
 

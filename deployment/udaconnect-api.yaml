@@ -33,6 +33,13 @@ spec:
       containers:
       - image: rogersacchelli/nd064-udaconnect-api:latest
         name: udaconnect-api
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "64m"
+          limits:
+            memory: "256Mi"
+            cpu: "256m"
         imagePullPolicy: Always
         env:
         - name: DB_USERNAME
