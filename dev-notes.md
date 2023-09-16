@@ -15,12 +15,25 @@ To do so, you will refactor this application into a microservice architecture us
 
 Management loved the POC, so now that there is buy-in, we want to enhance this application. You have been tasked to enhance the POC application into a Minimum Viable Product (MVP) to handle the large volume of location data that will be ingested.
 
-1. Review Starter Code and evaluate which message passing strategy is suitable
-2. Create architecture diagram to document.
-   1. It's expected to use Kafka/gRPC and a new REST API
-3. Refactor code into microservice (Python)
-4. Provide OpenAPI Documentation for APIs
-5. Create a Postman Library
+1. Review and Plan
+
+Review the starter project
+
+Determine which message passing strategies would integrate well when refactoring to a microservice architecture.
+
+2. Design and Document
+Using the design decisions from the previous step, create an architecture diagram of your microservice architecture showing the services and message passing techniques between them.
+Continue to use Kubernetes and maintain the core functionality of the starter project.
+Include at least three message passing strategies into your microservice architecture implementing Kafka, gRPC, and either enhancing or creating a RESTful API endpoint.
+3. Justify Your Decisions
+Write a 2-3 sentence rationale for each message passing strategy to justify your decision.
+4. Refactor into Microservices
+Refactor the starter code into a microservice architecture.
+While microservices can be technology-agnostic, we want to make sure that we use tools that your company is comfortable with. Therefore, this project should be done in Python.
+5. Create OpenAPI Documentation
+Provide OpenAPI documentation for API endpoints.
+6. Create a Postman Library
+Provide Postman library for REST endpoints that you created or modified.
 
 ## Submission Requirements
 The completed project must include:
