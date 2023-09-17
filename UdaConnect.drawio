@@ -1,10 +1,10 @@
-<mxfile host="Electron" modified="2023-09-16T21:32:26.641Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.7.5 Chrome/114.0.5735.289 Electron/25.8.1 Safari/537.36" etag="aJhuOVGXk9iWD4xltdGe" version="21.7.5" type="device" pages="2">
+<mxfile host="Electron" modified="2023-09-16T21:37:09.348Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.7.5 Chrome/114.0.5735.289 Electron/25.8.1 Safari/537.36" etag="PhHF9dnYsxQGGYLPg1s_" version="21.7.5" type="device" pages="2">
   <diagram id="xwU4HR_hHRo8wgDtijQ9" name="Architecture-Design">
     <mxGraphModel dx="989" dy="589" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="YRl5KZix_X-PNUt0Blo5-2" value="" style="rounded=0;whiteSpace=wrap;html=1;glass=0;shadow=0;fillColor=#eeeeee;strokeColor=#36393d;" vertex="1" parent="1">
+        <mxCell id="YRl5KZix_X-PNUt0Blo5-2" value="" style="rounded=0;whiteSpace=wrap;html=1;glass=0;shadow=0;" vertex="1" parent="1">
           <mxGeometry x="60" y="120" width="740" height="330" as="geometry" />
         </mxCell>
         <mxCell id="YRl5KZix_X-PNUt0Blo5-9" value="REST" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="YRl5KZix_X-PNUt0Blo5-4" target="YRl5KZix_X-PNUt0Blo5-8">
@@ -43,7 +43,7 @@
         <mxCell id="YRl5KZix_X-PNUt0Blo5-25" value="Kafka Consumer" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="680" y="320" width="60" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="YRl5KZix_X-PNUt0Blo5-28" value="UdaConnect" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="YRl5KZix_X-PNUt0Blo5-28" value="UdaConnect" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=14;" vertex="1" parent="1">
           <mxGeometry x="380" y="130" width="80" height="30" as="geometry" />
         </mxCell>
         <mxCell id="YRl5KZix_X-PNUt0Blo5-29" value="Person()" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">

@@ -17,13 +17,6 @@ DATE_FORMAT = "%Y-%m-%d"
 
 api = Namespace("UdaConnect", description="Connections via geolocation.")  # noqa
 
-# Kafka Configuration
-TOPIC_NAME = 'persons'
-KAFKA_SERVER = 'kafka-svc:9092'
-
-producer = KafkaProducer(bootstrap_servers=KAFKA_SERVER)
-
-
 # TODO: This needs better exception handling
 
 
@@ -41,8 +34,6 @@ class LocationResource(Resource):
     @responds(schema=LocationSchema)
     def get(self, location_id) -> Location:
         location: Location = LocationService.retrieve(location_id)
-        producer.send(TOPIC_NAME, b'Test Message!!!')
-        producer.flush()
         return location
 
 
