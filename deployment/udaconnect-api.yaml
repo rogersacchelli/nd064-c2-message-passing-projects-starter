@@ -31,7 +31,7 @@ spec:
         service: udaconnect-api
     spec:
       containers:
-      - image: rogersacchelli/nd064-udaconnect-api:latest
+      - image: rogersacchelli/nd064-udaconnect-api:0.1.0
         name: udaconnect-api
         resources:
           requests:
