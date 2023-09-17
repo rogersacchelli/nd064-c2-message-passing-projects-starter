@@ -7,7 +7,7 @@ from app.udaconnect.schemas import (
     PersonSchema,
 )
 from app.udaconnect.services import ConnectionService, LocationService, PersonService
-from flask import request
+from flask import request, jsonify
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
 from typing import Optional, List
@@ -16,6 +16,11 @@ from kafka import KafkaProducer
 DATE_FORMAT = "%Y-%m-%d"
 
 api = Namespace("UdaConnect", description="Connections via geolocation.")  # noqa
+
+# kafka definitions
+bootstrap_servers = 'kafka-svc:9092'
+kafka_topics = {'person':"person", 'location':"localtion"}
+kafka_producer = KafkaProducer(bootstrap_servers=bootstrap_servers)
 
 # TODO: This needs better exception handling
 
@@ -26,12 +31,15 @@ class LocationResource(Resource):
     @accepts(schema=LocationSchema)
     @responds(schema=LocationSchema)
     def post(self) -> Location:
-        request.get_json()
-        location: Location = LocationService.create(request.get_json())
-        return location
+        data = request.get_json()
+        # post message to kafka brocker. 
+        kafka_producer.send(kafka_topics['location'], value=data.encode("UTF-8"))
+        #location: Location = LocationService.create(request.get_json())
+        return jsonify(success=True)
 
     @responds(schema=LocationSchema)
     def get(self, location_id) -> Location:
+        # TODO: Handle using gRPC
         location: Location = LocationService.retrieve(location_id)
         return location
 
@@ -42,8 +50,9 @@ class PersonsResource(Resource):
     @responds(schema=PersonSchema)
     def post(self) -> Person:
         payload = request.get_json()
-        new_person: Person = PersonService.create(payload)
-        return new_person
+        kafka_producer.send(kafka_topics['location'], value=payload.encode("UTF-8"))
+        #new_person: Person = PersonService.create(payload)
+        return jsonify(success=True)
 
     @responds(schema=PersonSchema, many=True)
     def get(self) -> List[Person]:
