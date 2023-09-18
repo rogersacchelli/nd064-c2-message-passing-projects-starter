@@ -19,7 +19,7 @@ api = Namespace("UdaConnect", description="Connections via geolocation.")  # noq
 
 # kafka definitions
 bootstrap_servers = 'kafka:9092'
-kafka_topics = {'person':"person", 'location':"localtion"}
+kafka_topics = {'person':"person", 'location':"location"}
 kafka_producer = KafkaProducer(bootstrap_servers=bootstrap_servers)
 
 # TODO: This needs better exception handling
@@ -50,14 +50,15 @@ class PersonsResource(Resource):
     @responds(schema=PersonSchema)
     def post(self) -> Person:
         payload = request.get_json()
-        kafka_producer.send(kafka_topics['location'], value=payload.encode("UTF-8"))
+        kafka_producer.send(kafka_topics['person'], value=payload.encode("UTF-8"))
         #new_person: Person = PersonService.create(payload)
         return jsonify(success=True)
 
     @responds(schema=PersonSchema, many=True)
     def get(self) -> List[Person]:
         persons: List[Person] = PersonService.retrieve_all()
-        
+        kafka_producer.send(kafka_topics['person'], value=persons.encode("UTF-8"))
+
         return persons
 
 
