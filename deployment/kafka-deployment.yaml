@@ -27,7 +27,7 @@ spec:
       containers:
         - env:
             - name: KAFKA_ADVERTISED_HOST_NAME
-              value: localhost
+              value: kafka-svc
             - name: KAFKA_AUTO_CREATE_TOPICS_ENABLE
               value: "true"
             - name: KAFKA_ZOOKEEPER_CONNECT
