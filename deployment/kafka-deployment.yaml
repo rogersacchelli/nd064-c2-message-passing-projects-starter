@@ -17,10 +17,6 @@ status:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: D:\GIT\nd064-c2-message-passing-projects-starter\kompose.exe convert
-    kompose.version: 1.26.0 (40646f47)
-  creationTimestamp: null
   labels:
     io.kompose.service: kafka
   name: kafka
@@ -33,10 +29,6 @@ spec:
     type: Recreate
   template:
     metadata:
-      annotations:
-        kompose.cmd: D:\GIT\nd064-c2-message-passing-projects-starter\kompose.exe convert
-        kompose.version: 1.26.0 (40646f47)
-      creationTimestamp: null
       labels:
         io.kompose.service: kafka
     spec:
@@ -62,7 +54,6 @@ spec:
               value: 'yes'
             - name: KAFKA_CFG_NODE_ID
               value: '1'
-          #image: wurstmeister/kafka
           image: bitnami/kafka
           name: kafka
           ports:

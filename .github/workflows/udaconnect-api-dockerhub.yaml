@@ -40,4 +40,4 @@ jobs:
           file: ./modules/api/Dockerfile
           platforms: linux/amd64
           push: true
-          tags: rogersacchelli/nd064-udaconnect-api:0.1.0
+          tags: rogersacchelli/nd064-udaconnect-api:0.2.0
