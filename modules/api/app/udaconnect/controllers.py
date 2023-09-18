@@ -18,7 +18,7 @@ DATE_FORMAT = "%Y-%m-%d"
 api = Namespace("UdaConnect", description="Connections via geolocation.")  # noqa
 
 # kafka definitions
-bootstrap_servers = 'kafka-svc:9092'
+bootstrap_servers = 'kafka:9092'
 kafka_topics = {'person':"person", 'location':"localtion"}
 kafka_producer = KafkaProducer(bootstrap_servers=bootstrap_servers)
 
