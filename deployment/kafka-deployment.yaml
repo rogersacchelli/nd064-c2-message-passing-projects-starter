@@ -54,6 +54,8 @@ spec:
               value: 'yes'
             - name: KAFKA_CFG_NODE_ID
               value: '1'
+            - name: KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE
+              value: 'true'
           image: bitnami/kafka
           name: kafka
           ports:
