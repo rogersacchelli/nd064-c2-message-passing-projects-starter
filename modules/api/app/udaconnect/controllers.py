@@ -56,9 +56,8 @@ class PersonsResource(Resource):
 
     @responds(schema=PersonSchema, many=True)
     def get(self) -> List[Person]:
+        #kafka_producer.send(kafka_topics['person'], value=persons.encode("UTF-8"))
         persons: List[Person] = PersonService.retrieve_all()
-        kafka_producer.send(kafka_topics['person'], value=persons.encode("UTF-8"))
-
         return persons
 
 
