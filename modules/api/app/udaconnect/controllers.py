@@ -52,14 +52,15 @@ class PersonsResource(Resource):
     @responds(schema=PersonSchema)
     def post(self) -> Person:
         payload = request.get_json()
-        #kafka_producer.send(kafka_topics['person'], value=payload.encode("UTF-8"))
+        kafka_producer.send(kafka_topics['person'], value=payload.encode("UTF-8"))
         new_person: Person = PersonService.create(payload)
         return jsonify(success=True)
 
     @responds(schema=PersonSchema, many=True)
     def get(self) -> List[Person]:
+        payload = request.get_json()
         persons: List[Person] = PersonService.retrieve_all()
-        kafka_producer.send(kafka_topics['person'], value=json.dumps(persons).encode("UTF-8"))
+        kafka_producer.send(kafka_topics['person'], value=payload.encode("UTF-8"))
         return persons
 
 
