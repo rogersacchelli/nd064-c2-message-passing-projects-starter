@@ -33,8 +33,8 @@ class LocationResource(Resource):
     def post(self) -> Location:
         data = request.get_json()
         # post message to kafka brocker. 
-        kafka_producer.send(kafka_topics['location'], value=data.encode("UTF-8"))
-        #location: Location = LocationService.create(request.get_json())
+        #kafka_producer.send(kafka_topics['location'], value=data.encode("UTF-8"))
+        location: Location = LocationService.create(request.get_json())
         return jsonify(success=True)
 
     @responds(schema=LocationSchema)
@@ -50,8 +50,8 @@ class PersonsResource(Resource):
     @responds(schema=PersonSchema)
     def post(self) -> Person:
         payload = request.get_json()
-        kafka_producer.send(kafka_topics['person'], value=payload.encode("UTF-8"))
-        #new_person: Person = PersonService.create(payload)
+        #kafka_producer.send(kafka_topics['person'], value=payload.encode("UTF-8"))
+        new_person: Person = PersonService.create(payload)
         return jsonify(success=True)
 
     @responds(schema=PersonSchema, many=True)
