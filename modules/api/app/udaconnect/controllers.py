@@ -13,6 +13,8 @@ from flask_restx import Namespace, Resource
 from typing import Optional, List
 from kafka import KafkaProducer
 
+import json
+
 DATE_FORMAT = "%Y-%m-%d"
 
 api = Namespace("UdaConnect", description="Connections via geolocation.")  # noqa
@@ -57,7 +59,7 @@ class PersonsResource(Resource):
     @responds(schema=PersonSchema, many=True)
     def get(self) -> List[Person]:
         persons: List[Person] = PersonService.retrieve_all()
-        kafka_producer.send(kafka_topics['person'], value=persons.encode("UTF-8"))
+        kafka_producer.send(kafka_topics['person'], value=json.dumps(persons).encode("UTF-8"))
         return persons
 
 
