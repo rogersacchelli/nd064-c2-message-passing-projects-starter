@@ -32,12 +32,12 @@ kafka_producer = KafkaProducer(bootstrap_servers=bootstrap_servers)
 class LocationResource(Resource):
     @accepts(schema=LocationSchema)
     @responds(schema=LocationSchema)
-    def post(self) -> Location:
-        data = request.get_json()
+    def post(self, location_id) -> Location:
+        kafka_message = {"location_id":location_id}
         # post message to kafka brocker. 
-        #kafka_producer.send(kafka_topics['location'], value=data.encode("UTF-8"))
+        kafka_producer.send(kafka_topics['location'], bytes(str(kafka_message), 'utf-8'))
         location: Location = LocationService.create(request.get_json())
-        return jsonify(success=True)
+        return location
 
     @responds(schema=LocationSchema)
     def get(self, location_id) -> Location:
@@ -45,22 +45,21 @@ class LocationResource(Resource):
         location: Location = LocationService.retrieve(location_id)
         return location
 
-
+# TODO: Review /persons
 @api.route("/persons")
 class PersonsResource(Resource):
     @accepts(schema=PersonSchema)
     @responds(schema=PersonSchema)
     def post(self) -> Person:
         payload = request.get_json()
-        kafka_producer.send(kafka_topics['person'], value=payload.encode("UTF-8"))
+        kafka_producer.send(kafka_topics['person'], bytes(str("post persons"), 'utf-8'))
         new_person: Person = PersonService.create(payload)
         return jsonify(success=True)
 
     @responds(schema=PersonSchema, many=True)
     def get(self) -> List[Person]:
-        payload = request.get_json()
         persons: List[Person] = PersonService.retrieve_all()
-        kafka_producer.send(kafka_topics['person'], value=payload.encode("UTF-8"))
+        kafka_producer.send(kafka_topics['person'], value=b'Person Get')
         return persons
 
 
