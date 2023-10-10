@@ -33,9 +33,9 @@ class LocationResource(Resource):
     @accepts(schema=LocationSchema)
     @responds(schema=LocationSchema)
     def post(self, location_id) -> Location:
-        kafka_message = {"location_id":location_id}
+        #kafka_message = {"location_id":location_id}
         # post message to kafka brocker. 
-        kafka_producer.send(kafka_topics['location'], bytes(str(kafka_message), 'utf-8'))
+        #kafka_producer.send(kafka_topics['location'], bytes(str(kafka_message), 'utf-8'))
         location: Location = LocationService.create(request.get_json())
         return location
 
@@ -52,14 +52,14 @@ class PersonsResource(Resource):
     @responds(schema=PersonSchema)
     def post(self) -> Person:
         payload = request.get_json()
-        kafka_producer.send(kafka_topics['person'], bytes(str("post persons"), 'utf-8'))
+        #kafka_producer.send(kafka_topics['person'], bytes(str("post persons"), 'utf-8'))
         new_person: Person = PersonService.create(payload)
         return jsonify(success=True)
 
     @responds(schema=PersonSchema, many=True)
     def get(self) -> List[Person]:
         persons: List[Person] = PersonService.retrieve_all()
-        kafka_producer.send(kafka_topics['person'], value=b'Person Get')
+        #kafka_producer.send(kafka_topics['person'], value=b'Person Get')
         return persons
 
 
