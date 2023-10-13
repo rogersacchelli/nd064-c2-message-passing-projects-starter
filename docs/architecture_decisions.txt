@@ -1,0 +1,9 @@
+* Location Service: Responsible for streamline User Location data to Kafka Broker and to provide in Location information if requested.
+
+* Kafka Broker: Responsible for queueing Location data information. It's intented to prevent application from being overloaded and not be able store user data.
+
+* Location Consumer: Kafka Consumer module which fetches Location data into kafka and store it to database.
+
+* Person: Service responsible to provide Person information to Frontend by serving requests via REST and quering Connection services using gRPC for improved response.
+
+* Connection: Provides the method to find connections for specific users whitin defined constraints.

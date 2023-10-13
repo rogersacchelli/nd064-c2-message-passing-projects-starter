@@ -1,9 +1,12 @@
 from datetime import datetime
 
-from app.udaconnect.models import Connection, Location, Person
+from app.udaconnect.models import Person
+#from app.udaconnect.models import Connection, Location, Person
+#from app.udaconnect.models import Connection, Location, Person
+
 from app.udaconnect.schemas import (
     ConnectionSchema,
-    LocationSchema,
+    #LocationSchema,
     PersonSchema,
 )
 from app.udaconnect.services import ConnectionService, LocationService, PersonService
@@ -11,7 +14,7 @@ from flask import request, jsonify
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
 from typing import Optional, List
-from kafka import KafkaProducer
+#from kafka import KafkaProducer
 
 import json
 
@@ -20,30 +23,40 @@ DATE_FORMAT = "%Y-%m-%d"
 api = Namespace("UdaConnect", description="Connections via geolocation.")  # noqa
 
 # kafka definitions
-bootstrap_servers = 'kafka:9092'
-kafka_topics = {'person':"person", 'location':"location"}
-kafka_producer = KafkaProducer(bootstrap_servers=bootstrap_servers)
+# bootstrap_servers = 'kafka:9092'
+# kafka_topics = {'person':"person", 'location':"location"}
+# kafka_producer = KafkaProducer(bootstrap_servers=bootstrap_servers)
+
+
 
 # TODO: This needs better exception handling
 
-@api.route("/locations")     
-@api.route("/locations/<location_id>")
-@api.param("location_id", "Unique ID for a given Location", _in="query")
-class LocationResource(Resource):
-    @accepts(schema=LocationSchema)
-    @responds(schema=LocationSchema)
-    def post(self, location_id) -> Location:
-        #kafka_message = {"location_id":location_id}
-        # post message to kafka brocker. 
-        #kafka_producer.send(kafka_topics['location'], bytes(str(kafka_message), 'utf-8'))
-        location: Location = LocationService.create(request.get_json())
-        return location
 
-    @responds(schema=LocationSchema)
-    def get(self, location_id) -> Location:
-        # TODO: Handle using gRPC
-        location: Location = LocationService.retrieve(location_id)
-        return location
+# @api.route("/locations")     
+# @api.route("/locations/<location_id>")
+# @api.param("location_id", "Unique ID for a given Location", _in="query")
+# class LocationResource(Resource):
+#     @accepts(schema=LocationSchema)
+#     @responds(schema=LocationSchema)
+#     def post(self, location_id) -> Location:
+        
+#         request_data = request.get_json()
+
+#         if request_data:
+            
+#             message = {"method":"POST","location_id":location_id, "data":request_data}            
+#             message_kafka = json.dumps(message).encode('utf-8')
+#             try:
+#                 kafka_producer.send(kafka_topics['location'], message_kafka)
+#                 return json.dumps({'success':True}), 200, {'ContentType':'*/*'}
+#             except:
+#                 return json.dumps({'success':False}), 500, {'ContentType':'*/*'}
+#         #location: Location = LocationService.create(request.get_json())
+
+#     @responds(schema=LocationSchema)
+#     def get(self, location_id) -> Location:
+#         location: Location = LocationService.retrieve(location_id)
+#         return location
 
 # TODO: Review /persons
 @api.route("/persons")
