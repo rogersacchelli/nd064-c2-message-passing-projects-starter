@@ -2,7 +2,7 @@ FROM python:3.7-alpine
 
 WORKDIR .
 
-RUN apk add --no-cache gcc musl-dev linux-headers libc-dev
+RUN apk add --no-cache gcc musl-dev linux-headers geos libc-dev postgresql-dev geos-dev
 COPY ./requirements.txt requirements.txt
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
