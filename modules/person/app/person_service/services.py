@@ -2,14 +2,14 @@ import logging
 from datetime import datetime, timedelta
 from typing import Dict, List
 
-from person import db
-from person.udaconnect.models import Person
-from person.udaconnect.schemas import PersonSchema
+from app.person_service import db
+from app.person_service.models import Person
+from app.person_service.schemas import PersonSchema
 from geoalchemy2.functions import ST_AsText, ST_Point
 from sqlalchemy.sql import text
 
 logging.basicConfig(level=logging.WARNING)
-logger = logging.getLogger("udaconnect-api")
+logger = logging.getLogger("udaconnect-api-person")
 
 
 class PersonService:

@@ -1,13 +1,13 @@
 from datetime import datetime
 
-from person.udaconnect.models import Person
+from app.person_service.models import Person
 
 
-from person.udaconnect.schemas import (
+from app.person_service.schemas import (
     PersonSchema, ConnectionSchema
 )
 
-from person.udaconnect.services import PersonService
+from app.person_service.services import PersonService
 from flask import request, jsonify
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
@@ -17,7 +17,7 @@ import json
 
 DATE_FORMAT = "%Y-%m-%d"
 
-api = Namespace("UdaConnect", description="Connections via geolocation.")  # noqa
+api = Namespace("UdaConnect", description="Persons.")  # noqa
 
 
 # TODO: This needs better exception handling
