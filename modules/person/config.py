@@ -1,6 +1,11 @@
 import os
 from typing import List, Type
 
+DB_USERNAME = os.environ["DB_USERNAME"] if "DB_USERNAME" in os.environ else "ct_admin"
+DB_PASSWORD = os.environ["DB_PASSWORD"] if "DB_PASSWORD" in os.environ else "wowimsosecure"
+DB_PORT = os.environ["DB_PORT"] if "DB_PORT" in os.environ else "5432"
+DB_HOST = os.environ["DB_HOST"] if "DB_HOST" in os.environ else "postgres"
+DB_NAME = os.environ["DB_NAME"] if "DB_NAME" in os.environ else "geoconnections"
 
 
 

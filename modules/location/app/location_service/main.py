@@ -11,14 +11,30 @@ from typing import Optional, List
 from kafka import KafkaProducer
 
 import json
+import logging
+import sys
 
+logger = logging.getLogger('')
+logger.setLevel(logging.DEBUG)
+
+formatter = logging.Formatter('%(levelname)s:%(filename)s:%(asctime)s %(message)s', datefmt='%d/%m/%Y, %H:%M:%S,')
+
+stdout_handler = logging.StreamHandler(sys.stdout)
+
+stdout_handler.setFormatter(formatter)
+logger.addHandler(stdout_handler)
 
 api = Namespace("Location Entry", description="Connections via geolocation.")  # noqa
 
 # kafka definitions
-bootstrap_servers = 'localhost:9092'
+bootstrap_servers = 'kafka-svc.default.svc.cluster.local'
 kafka_topics = {'location':"location"}
-kafka_producer = KafkaProducer(bootstrap_servers=bootstrap_servers)
+
+try:
+    kafka_producer = KafkaProducer(bootstrap_servers=bootstrap_servers)
+    logging.info("kafka connected")
+except:
+    logging.error("Failed to connect to kafka")
 
 # TODO: This needs better exception handling
 

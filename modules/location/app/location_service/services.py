@@ -5,8 +5,6 @@ from typing import Dict, List
 from app.location_service import db
 from app.location_service.models import Location
 from app.location_service.schemas import LocationSchema
-from geoalchemy2.functions import ST_AsText, ST_Point
-from sqlalchemy.sql import text
 
 logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger("udaconnect-api-logging")
