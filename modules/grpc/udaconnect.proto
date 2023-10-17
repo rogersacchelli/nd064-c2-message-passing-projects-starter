@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+service udaConnect {
+    rpc getCloseConnections (ConnectionDataRequest) returns (ConnectionDataReply) {}
+}
+
+message ConnectionDataRequest { 
+    uint32 id = 1;
+    string start_date = 2;
+    string end_date = 3;
+    uint32 distance = 4;
+}
+
+message ConnectionDataReply {
+    uint32  id = 1;
+    uint32  location_id = 2;
+    float    coord_x = 3;
+    float    coord_y = 4;
+    string  creation_time = 5;
+}

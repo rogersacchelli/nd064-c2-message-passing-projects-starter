@@ -1,7 +1,8 @@
 from datetime import datetime
 
 from app.person_service.models import Person
-
+from app.person_service import udaconnect_pb2
+from app.person_service import udaconnect_pb2_grpc
 
 from app.person_service.schemas import (
     PersonSchema, ConnectionSchema
@@ -14,6 +15,8 @@ from flask_restx import Namespace, Resource
 from typing import Optional, List
 
 import json
+import grpc
+import logging
 
 DATE_FORMAT = "%Y-%m-%d"
 
@@ -21,6 +24,7 @@ api = Namespace("UdaConnect", description="Persons.")  # noqa
 
 
 # TODO: This needs better exception handling
+
 
 # TODO: Review /persons
 @api.route("/persons")
@@ -54,10 +58,18 @@ class PersonResource(Resource):
 class ConnectionDataResource(Resource):
     @responds(schema=ConnectionSchema, many=True)
     def get(self, person_id) -> ConnectionSchema:
-        start_date: datetime = datetime.strptime(request.args["start_date"], DATE_FORMAT)
-        end_date: datetime = datetime.strptime(request.args["end_date"], DATE_FORMAT)
+        # start_date = datetime.strftime(request.args["start_date"], DATE_FORMAT)
+        # end_date = datetime.strftime(request.args["end_date"], DATE_FORMAT)
         distance: Optional[int] = request.args.get("distance", 5)
-
+        print("----- getConnection ----")
+        print("Received Request id {person_id} - start: {end_date} - end: {end_date}".format(\
+            person_id=person_id, start_date=request.args["end_date"], end_date=request.args["end_date"]))
         # TODO: Get Connection via gRPC Call
-        
+        # udaconnect-connection.default.svc.cluster.local
+        with grpc.insecure_channel("localhost:50051") as channel:
+            stub = udaconnect_pb2_grpc.udaConnectStub(channel=channel)
+            response = stub.getCloseConnections(udaconnect_pb2.ConnectionDataRequest(id=int(person_id), \
+                        start_date=request.args["start_date"], end_date=request.args["end_date"], distance=int(request.args["distance"])))
+            
+
         return None
