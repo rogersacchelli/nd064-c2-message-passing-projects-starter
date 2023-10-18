@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from app.person_service.models import Person
+from app.person_service.models import Person, Connection, Location
 from app.person_service import udaconnect_pb2
 from app.person_service import udaconnect_pb2_grpc
 
@@ -12,7 +12,7 @@ from app.person_service.services import PersonService
 from flask import request, jsonify
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
-from typing import Optional, List
+from typing import Optional, List, Dict
 
 import json
 import grpc
@@ -58,18 +58,33 @@ class PersonResource(Resource):
 class ConnectionDataResource(Resource):
     @responds(schema=ConnectionSchema, many=True)
     def get(self, person_id) -> ConnectionSchema:
-        # start_date = datetime.strftime(request.args["start_date"], DATE_FORMAT)
-        # end_date = datetime.strftime(request.args["end_date"], DATE_FORMAT)
+        #start_date = datetime.strptime(request.args["start_date"], DATE_FORMAT)
+        #end_date = datetime.strftime(request.args["end_date"], DATE_FORMAT)
         distance: Optional[int] = request.args.get("distance", 5)
         print("----- getConnection ----")
         print("Received Request id {person_id} - start: {end_date} - end: {end_date}".format(\
             person_id=person_id, start_date=request.args["end_date"], end_date=request.args["end_date"]))
         # TODO: Get Connection via gRPC Call
         # udaconnect-connection.default.svc.cluster.local
-        with grpc.insecure_channel("localhost:50051") as channel:
+
+        person_map: Dict[str, Person] = {person.id: person for person in PersonService.retrieve_all()}
+        result: List[Connection] = []
+        print("querying grpc server")
+        with grpc.insecure_channel("udaconnect-connection:50051") as channel:
+        #with grpc.insecure_channel("localhost:50051") as channel:
             stub = udaconnect_pb2_grpc.udaConnectStub(channel=channel)
             response = stub.getCloseConnections(udaconnect_pb2.ConnectionDataRequest(id=int(person_id), \
                         start_date=request.args["start_date"], end_date=request.args["end_date"], distance=int(request.args["distance"])))
-            
+            print(response)
+            location = Location(
+                    id=response.location_id,
+                    person_id=response.id,
+                    creation_time=datetime.strptime(response.creation_time, DATE_FORMAT),
+                )
+            location.set_wkt_with_coords(response.coord_x, response.coord_y)
 
-        return None
+            result.append(Connection(
+                            person=person_map[response.id], location=location,
+                        ))
+            
+            return result

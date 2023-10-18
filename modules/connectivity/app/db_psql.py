@@ -1,17 +1,27 @@
 import psycopg2
 from sqlalchemy.sql import text
 from typing import Dict, List
-import os, logging
+import os, logging, sys
 
 DB_USERNAME = os.environ["DB_USERNAME"] if "DB_USERNAME" in os.environ else "ct_admin"
 DB_PASSWORD = os.environ["DB_PASSWORD"] if "DB_PASSWORD" in os.environ else "wowimsosecure"
 DB_PORT = os.environ["DB_PORT"] if "DB_PORT" in os.environ else 30613
-DB_HOST = os.environ["DB_HOST"] if "DB_HOST" in os.environ else "postgres"
+DB_HOST = os.environ["DB_HOST"] if "DB_HOST" in os.environ else "localhost"
 DB_NAME = os.environ["DB_NAME"] if "DB_NAME" in os.environ else "geoconnections"
+
+logger = logging.getLogger('')
+logger.setLevel(logging.DEBUG)
+
+formatter = logging.Formatter('%(levelname)s:%(filename)s:%(asctime)s %(message)s', datefmt='%d/%m/%Y, %H:%M:%S,')
+
+stderr_handler = logging.StreamHandler(sys.stderr)
+
+stderr_handler.setFormatter(formatter)
+logger.addHandler(stderr_handler)
 
 # Database connection parameters
 db_params = {
-    "host": "localhost",
+    "host": DB_HOST,
     "port": DB_PORT,
     "database": DB_NAME,
     "user": DB_USERNAME,
@@ -36,7 +46,7 @@ def get_close_connections(person_id, start_date, end_date, distance):
         locations = cursor.fetchall()
         location_list = []
         for loc in locations:
-            print(str(loc))
+            logger.debug(str(loc))
             location_list.append(loc)
         
         # Clean repeated results
@@ -53,7 +63,7 @@ def get_close_connections(person_id, start_date, end_date, distance):
                 AND     ST_DWithin(coordinate::geography,ST_SetSRID(ST_MakePoint({coord_x}, {coord_y}),4326)::geography, '{distance}');""".format(\
                     start_date=start_date, end_date=end_date,person_id=person_id, coord_x=coord_x, coord_y=coord_y, distance=distance)
         
-            print(query)
+            logger.debug(query)
 
             # Execute a simple query
             cursor.execute(query)
@@ -62,7 +72,7 @@ def get_close_connections(person_id, start_date, end_date, distance):
             rows = cursor.fetchall()
 
             for row in rows:
-                print(row)
+                logger.debug(row)
                 connections.append(row)
 
         connections = list(set(connections))
@@ -72,6 +82,6 @@ def get_close_connections(person_id, start_date, end_date, distance):
 
         return connections
 
-    except (Exception, psycopg2.DatabaseError) as error:
+    except Exception as error:
         print("Error:", error)
 

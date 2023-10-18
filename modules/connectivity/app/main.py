@@ -6,19 +6,19 @@ from concurrent import futures
 
 from services import ConnectionService
 
-from typing import Optional, List
+# from typing import Optional, List
 
-import json
+import logging, sys
 
-DATE_FORMAT = "%Y-%m-%d"
 GRPC_SERVER_PORT = 50051
+
 
 def run_grpc_server():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     udaconnect_pb2_grpc.add_udaConnectServicer_to_server(ConnectionService(), server)
     server.add_insecure_port('[::]:' + str(GRPC_SERVER_PORT))  # Listen on port 50051
     
-    print("Starting gRPC server on port:" + str(GRPC_SERVER_PORT))
+    logging.debug("Starting gRPC server on port:" + str(GRPC_SERVER_PORT))
     server.start()
 
     try:
