@@ -73,18 +73,20 @@ class ConnectionDataResource(Resource):
         with grpc.insecure_channel("udaconnect-connection:50051") as channel:
         #with grpc.insecure_channel("localhost:50051") as channel:
             stub = udaconnect_pb2_grpc.udaConnectStub(channel=channel)
-            response = stub.getCloseConnections(udaconnect_pb2.ConnectionDataRequest(id=int(person_id), \
+            connection = stub.getCloseConnections(udaconnect_pb2.ConnectionDataRequest(id=int(person_id), \
                         start_date=request.args["start_date"], end_date=request.args["end_date"], distance=int(request.args["distance"])))
-            print(response)
-            location = Location(
-                    id=response.location_id,
-                    person_id=response.id,
-                    creation_time=datetime.strptime(response.creation_time, DATE_FORMAT),
-                )
-            location.set_wkt_with_coords(response.coord_x, response.coord_y)
+            for response in connection.ConnectionDataResponse:
+                print("response -> id:{id} - location:{location} - time:{time}".format(\
+                    id=response.id, location=response.location_id, time=response.creation_time))
+                location = Location(
+                        id=response.location_id,
+                        person_id=response.id,
+                        creation_time=datetime.strptime(response.creation_time, DATE_FORMAT),
+                    )
+                location.set_wkt_with_coords(response.coord_x, response.coord_y)
 
-            result.append(Connection(
-                            person=person_map[response.id], location=location,
-                        ))
-            
-            return result
+                result.append(Connection(
+                                person=person_map[response.id], location=location,
+                            ))
+                
+        return result

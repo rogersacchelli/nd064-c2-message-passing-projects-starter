@@ -12,6 +12,10 @@ message ConnectionDataRequest {
 }
 
 message ConnectionDataReply {
+    repeated ConnectionData ConnectionDataResponse = 1;
+}
+
+message ConnectionData {
     uint32  id = 1;
     uint32  location_id = 2;
     float    coord_x = 3;

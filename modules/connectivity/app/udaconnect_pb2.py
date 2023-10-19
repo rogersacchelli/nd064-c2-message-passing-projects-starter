@@ -13,7 +13,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10udaconnect.proto\"[\n\x15\x43onnectionDataRequest\x12\n\n\x02id\x18\x01 \x01(\r\x12\x12\n\nstart_date\x18\x02 \x01(\t\x12\x10\n\x08\x65nd_date\x18\x03 \x01(\t\x12\x10\n\x08\x64istance\x18\x04 \x01(\r\"o\n\x13\x43onnectionDataReply\x12\n\n\x02id\x18\x01 \x01(\r\x12\x13\n\x0blocation_id\x18\x02 \x01(\r\x12\x0f\n\x07\x63oord_x\x18\x03 \x01(\x02\x12\x0f\n\x07\x63oord_y\x18\x04 \x01(\x02\x12\x15\n\rcreation_time\x18\x05 \x01(\t2S\n\nudaConnect\x12\x45\n\x13getCloseConnections\x12\x16.ConnectionDataRequest\x1a\x14.ConnectionDataReply\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10udaconnect.proto\"[\n\x15\x43onnectionDataRequest\x12\n\n\x02id\x18\x01 \x01(\r\x12\x12\n\nstart_date\x18\x02 \x01(\t\x12\x10\n\x08\x65nd_date\x18\x03 \x01(\t\x12\x10\n\x08\x64istance\x18\x04 \x01(\r\"F\n\x13\x43onnectionDataReply\x12/\n\x16\x43onnectionDataResponse\x18\x01 \x03(\x0b\x32\x0f.ConnectionData\"j\n\x0e\x43onnectionData\x12\n\n\x02id\x18\x01 \x01(\r\x12\x13\n\x0blocation_id\x18\x02 \x01(\r\x12\x0f\n\x07\x63oord_x\x18\x03 \x01(\x02\x12\x0f\n\x07\x63oord_y\x18\x04 \x01(\x02\x12\x15\n\rcreation_time\x18\x05 \x01(\t2S\n\nudaConnect\x12\x45\n\x13getCloseConnections\x12\x16.ConnectionDataRequest\x1a\x14.ConnectionDataReply\"\x00\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -23,7 +23,9 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_CONNECTIONDATAREQUEST']._serialized_start=20
   _globals['_CONNECTIONDATAREQUEST']._serialized_end=111
   _globals['_CONNECTIONDATAREPLY']._serialized_start=113
-  _globals['_CONNECTIONDATAREPLY']._serialized_end=224
-  _globals['_UDACONNECT']._serialized_start=226
-  _globals['_UDACONNECT']._serialized_end=309
+  _globals['_CONNECTIONDATAREPLY']._serialized_end=183
+  _globals['_CONNECTIONDATA']._serialized_start=185
+  _globals['_CONNECTIONDATA']._serialized_end=291
+  _globals['_UDACONNECT']._serialized_start=293
+  _globals['_UDACONNECT']._serialized_end=376
 # @@protoc_insertion_point(module_scope)

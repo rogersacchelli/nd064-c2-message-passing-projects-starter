@@ -4,6 +4,7 @@ from typing import Dict, List
 from db_psql import get_close_connections
 import udaconnect_pb2
 import udaconnect_pb2_grpc
+from udaconnect_pb2 import ConnectionDataReply
 from datetime import datetime
 import sys
 
@@ -25,10 +26,15 @@ class ConnectionService(udaconnect_pb2_grpc.udaConnectServicer):
         connections = get_close_connections(person_id=request.id, start_date=request.start_date, end_date=request.end_date, \
                                              distance=request.distance)
         
+        Connections = ConnectionDataReply()
+
         for connection in connections:
-            logger.info("Connection found: " + str(connection))
-            response = udaconnect_pb2.ConnectionDataReply(id=connection[0], location_id = connection[1], \
-                                                          coord_x=connection[2], coord_y=connection[3], creation_time=connection[4].strftime('%Y-%m-%d'))
-            return response
+            logger.info("Connection found: " + str(connections))
+            #resp = udaconnect_pb2.ConnectionData(id=connection[0], location_id = connection[1], \
+            #                                            coord_x=connection[2], coord_y=connection[3], creation_time=connection[4].strftime('%Y-%m-%d'))
+            Connections.ConnectionDataResponse.add(id=connection[0], location_id = connection[1], \
+                                                        coord_x=connection[2], coord_y=connection[3], creation_time=connection[4].strftime('%Y-%m-%d'))
+            
+        return Connections
         
         
