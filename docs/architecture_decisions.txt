@@ -1,4 +1,4 @@
-* Location Service: Responsible for streamline User Location data to Kafka Broker and to provide in Location information if requested.
+* Location Service: Responsible for streamline User Location data to Kafka Broker and to provide Location information if requested.
 
 * Kafka Broker: Responsible for queueing Location data information. It's intented to prevent application from being overloaded and not be able store user data.
 
