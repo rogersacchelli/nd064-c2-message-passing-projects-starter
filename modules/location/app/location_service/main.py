@@ -27,7 +27,7 @@ logger.addHandler(stdout_handler)
 api = Namespace("Location Entry", description="Connections via geolocation.")  # noqa
 
 # kafka definitions
-bootstrap_servers = 'kafka-svc.default.svc.cluster.local'
+bootstrap_servers = 'kafka:9094'
 kafka_topics = {'location':"location"}
 
 try:
