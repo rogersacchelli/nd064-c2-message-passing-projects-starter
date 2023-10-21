@@ -48,7 +48,9 @@ class LocationResource(Resource):
         request_data = request.get_json()
         if request_data:
             
-            message = {"method":"POST","location_id":location_id, "data":request_data}            
+            message = {"method":"POST", "location_id":location_id, "id":request_data['id'],\
+                       "longitude":request_data["longitude"], "latitude":request_data["latitude"],"creation_time":request_data["creation_time"]}
+                        
             print("got request data: " + str(message))
             message = json.dumps(message).encode('utf-8')
             try:

@@ -49,6 +49,12 @@ class PersonResource(Resource):
     def get(self, person_id) -> Person:
         person: Person = PersonService.retrieve(person_id)
         return person
+    
+    @responds(schema=PersonSchema)
+    def delete(self, person_id) -> Person:
+        person: Person = PersonService.delete(person_id)
+
+        return person
 
 
 @api.route("/persons/<person_id>/connection")

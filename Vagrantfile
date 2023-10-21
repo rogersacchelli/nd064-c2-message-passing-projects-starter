@@ -33,8 +33,10 @@ Vagrant.configure("2") do |config|
       sudo zypper refresh
       sudo zypper --non-interactive install bzip2
       sudo zypper --non-interactive install etcd
+      sudo zypper --non-interactive install git
       sudo zypper --non-interactive install apparmor-parser
       curl -sfL https://get.k3s.io | sh -
+      git clone https://github.com/rogersacchelli/nd064-c2-message-passing-projects-starter
     SHELL
   end
 

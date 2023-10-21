@@ -1,6 +1,6 @@
 GRPC is implemented between Person and Connection Modules.
 
-When API endpoint '/persons/<person_id>/connection' is called, it triggers a gRPC client call to gRPC server at Connection module.
+When API endpoint '/persons/<person_id>/connection' is called using POST method, it triggers a gRPC client call to gRPC server at Connection module.
 
 At the server side it's implemented a method to search the postgres database the User Connection information. Multiple requests are
 made to search all posible connections for the user of interest and each response is appended to gRPC response message.
