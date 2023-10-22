@@ -35,6 +35,7 @@ kubectl apply -f ~/nd064-c2-message-passing-projects-starter/deployment
 
 pod_name=$(kubectl get pods -o custom-columns=":metadata.name" --no-headers | grep '^postgres' | head -n 1)
 
+cd ~/nd064-c2-message-passing-projects-starter/
 bash scripts/run_db_command.sh $pod_name
 
 ```
